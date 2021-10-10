@@ -1,0 +1,6 @@
+#!/bin/sh
+
+export XDG_DATA_HOME=/services/caddy/assets
+export DUCKDNS_API_TOKEN="$(cat /services/caddy/duckdns.token)"
+
+exec chpst -u caddy:caddy /services/caddy/caddy run --config /services/caddy/Caddyfile

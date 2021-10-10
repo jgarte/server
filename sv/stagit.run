@@ -1,0 +1,5 @@
+#!/bin/sh
+
+. /etc/stagit/stagit.conf
+
+exec chpst -u stagit:stagit git daemon --base-path="$GIT_HOME"

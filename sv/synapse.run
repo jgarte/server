@@ -1,0 +1,5 @@
+#!/bin/sh
+
+. /services/synapse/env/bin/activate
+
+exec chpst -u synapse:synapse python -m synapse.app.homeserver -c /services/synapse/homeserver.yaml
