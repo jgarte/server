@@ -1,0 +1,7 @@
+#!/bin/sh
+
+. /services/appservice_discord/env/bin/activate
+
+exec chpst -u appservice_discord:appservice_discord python \
+	/services/appservice_discord/appservice/main.py \
+	/services/appservice_discord/appservice # Base dir for config

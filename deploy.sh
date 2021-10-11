@@ -5,7 +5,7 @@ set -eu # Make sure that all params are set.
 
 . "$(dirname "$0")/setup.sh"
 
-: "${SERVICES:=caddy synapse stagit umurmur}" # Services that I run.
+: "${SERVICES:=caddy appservice_discord synapse stagit umurmur}" # Services that I run.
 
 grep "^$MAIN_USER:" /etc/group || {
 	adduser "$MAIN_USER"

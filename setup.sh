@@ -10,6 +10,22 @@ do_as_user() {
 	su - "$user" -c "$*"
 }
 
+appservice_discord() {
+	[ -d /services/appservice_discord/.git ] ||
+		do_as_user appservice_discord \
+			git clone --depth=1 \
+				https://github.com/git-bruh/matrix-discord-bridge /services/appservice_discord
+
+	(
+		cd /services/appservice_discord
+
+		git pull
+
+		[ -d env ] || do_as_user appservice_discord python -m venv "$PWD/env"
+		do_as_user appservice_discord "cd $PWD; . env/bin/activate; pip install -r appservice/requirements.txt"
+	)
+}
+
 caddy() {
 	kiss list libcap # For setcap
 
@@ -44,7 +60,7 @@ synapse() {
 		: "${SYNAPSE_USER:=synapse_user}"
 		: "${SYNAPSE_DB:=synapse}"
 
-		kiss list libjpeg-turbo libxslt # Required by the Python packages
+		kiss list libjpeg-turbo libxslt rust # Required by the Python packages
 
 		[ -d env ] || do_as_user synapse python -m venv "$PWD/env"
 		. env/bin/activate
@@ -77,7 +93,7 @@ synapse() {
 		cat << EOF
 NOTE: The postgres password is stored in "/services/synapse/pg_pass" for reference.
 
-The following lines must be added to homeserver.yaml:
+The following lines must be added to homeserver.yaml to replace the default sqlite3 database:
 database:
   name: psycopg2
   args:
