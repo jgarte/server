@@ -1,3 +1,3 @@
 #!/bin/sh
 
-exec chpst -u umurmur:umurmur umurmurd
+exec chpst -u umurmur:umurmur umurmurd -d
